@@ -13,6 +13,11 @@
          "name": "Chinese for learners (pinyin only)",
          "region": "learners",
          "bidirectional": false
+      },
+      "py_en": {
+         "name": "Chinese for learners (english and pinyin)",
+         "region": "learners",
+         "bidirectional": false
       }
    }
 }

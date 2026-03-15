@@ -9,6 +9,7 @@ There are two languages provided:
 | ------------- | ------------- | ------------- |
 | zh_ln  | Chinese for learners  | 苦力怕 (kǔ lì pà)  |
 | zh_py | Chinese for learners (pinyin only)  | kǔ lì pà  |
+| py_en | Chinese for learners (english and pinyin)  | Creeper (kǔ lì pà)  |
 
 Once the resource pack is enabled, the two languages will appear very low down in the languages selection menu, alongside the official Mandarin translations, since the languages are sorted by ID:
 

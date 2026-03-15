@@ -4,3 +4,4 @@ namespace MinecraftTranslator.Domain
 type Language = 
     | zh_ln
     | zh_py
+    | py_en

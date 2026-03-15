@@ -9,6 +9,7 @@ let parseLanguage (language: string) =
   match language.ToLower() with
     | "zh_ln" -> Language.zh_ln
     | "zh_py" -> Language.zh_py
+    | "py_en" -> Language.py_en
     | _ -> failwith "invalid language"
 
 let parseVersion (version: string) =
@@ -31,8 +32,9 @@ let runTranslateAndReturnExitCode (opts: TranslateOptions) =
     let language = parseLanguage opts.language
     let version = parseVersion opts.version
     printfn $"Translating Minecraft version {version} to language {(language.ToString())}"
-    let languageFile = MinecraftDownloader.getLanguageFile "minecraft/lang/zh_cn.json"
-    let transliteration = AzureTransliterator.transliterateLanguageFile languageFile language
+    let chineseLanguageFile = MinecraftDownloader.getLanguageFile "minecraft/lang/zh_cn.json"
+    let englishLanguageFile = MinecraftDownloader.getLanguageFile "minecraft/lang/en_us.json"
+    let transliteration = AzureTransliterator.transliterateLanguageFile chineseLanguageFile englishLanguageFile language
     let jsonOptions = JsonSerializerOptions()
     jsonOptions.WriteIndented <- true
     jsonOptions.Encoder <- Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping 

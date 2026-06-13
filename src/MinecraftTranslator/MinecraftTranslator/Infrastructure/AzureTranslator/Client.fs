@@ -20,10 +20,15 @@ module AzureTransliterator =
     clientOptions.Retry.MaxRetries <- 10
     let client = TextTranslationClient(credentials,"global" , clientOptions)
     
-    let mapToOutputLanguage englishText originalText transliteratedText outputLanguage =
+    let shouldUsePinyinOnlyInPyEn key =
+        let normalizedKey = key.ToLowerInvariant()
+        normalizedKey.Contains("title") || normalizedKey.Contains("description")
+
+    let mapToOutputLanguage key englishText originalText transliteratedText outputLanguage =
         match outputLanguage with
             | Language.zh_ln -> $"{originalText} ({transliteratedText})"
             | Language.zh_py -> transliteratedText
+            | Language.py_en when shouldUsePinyinOnlyInPyEn key -> transliteratedText
             | Language.py_en -> $"{englishText} ({transliteratedText})"
 
     let transliterateLanguageFile (chineseFile: LanguageFile) (englishFile: LanguageFile) (outputLanguage: Language)  =
@@ -39,7 +44,7 @@ module AzureTransliterator =
         let resultLanguageFile = Seq.zip3 keys originalText transliterations
                                 |> Seq.map (fun (key,orig,trans) ->
                                     let englishText = Map.tryFind key englishFile |> Option.defaultValue orig
-                                    (key,mapToOutputLanguage englishText orig trans.Text outputLanguage))
+                                    (key,mapToOutputLanguage key englishText orig trans.Text outputLanguage))
                                 |> Map.ofSeq
         resultLanguageFile
 
